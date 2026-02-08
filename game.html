@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trace — Play Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Trace</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="game.html" class="active">Play Game</a>
+        <a href="#" id="nav-logout" style="display: none;">Log out</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="game-page">
+    <div class="container">
+      <div class="game-header">
+        <h1>Trace</h1>
+        <p>Drag from number to number in order (1 → 2 → 3 …). Start on the green dot, drag to the next number, and release. We measure hand-eye coordination and cursor path (attention proxy).</p>
+      </div>
+
+      <div id="start-screen" class="start-screen">
+        <p>Choose grid size. More numbers = longer round and more data.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+          <button type="button" class="btn btn-secondary" data-size="6" data-count="8">6×6 — 8 numbers</button>
+          <button type="button" class="btn btn-secondary" data-size="6" data-count="12">6×6 — 12 numbers</button>
+          <button type="button" class="btn btn-secondary" data-size="8" data-count="12">8×8 — 12 numbers</button>
+        </div>
+        <button type="button" id="btn-start" class="btn btn-primary">Start round</button>
+      </div>
+
+      <div id="game-area" style="display: none;">
+        <div class="game-stats">
+          <div class="stat">
+            <div class="stat-value" id="stat-current">1</div>
+            <div class="stat-label">Current target</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="stat-time">0.0s</div>
+            <div class="stat-label">Elapsed time</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="stat-wrong">0</div>
+            <div class="stat-label">Wrong releases</div>
+          </div>
+        </div>
+
+        <div class="game-board-wrap" id="board-wrap">
+          <div id="game-board" class="game-board size-6"></div>
+          <svg class="game-path-svg" id="path-svg" aria-hidden="true">
+            <defs>
+              <line id="path-line-live" class="live" x1="0" y1="0" x2="0" y2="0"/>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="game-actions">
+          <button type="button" id="btn-reset" class="btn btn-secondary">New round</button>
+        </div>
+
+        <div id="results-panel" class="results-panel">
+          <h3>Hand-eye coordination & attention metrics</h3>
+          <div class="metrics-grid" id="metrics-grid"></div>
+          <div class="reaction-chart">
+            <h4>Reaction time per segment (ms)</h4>
+            <div class="reaction-bars" id="reaction-bars"></div>
+          </div>
+          <div class="eye-movement-note">
+            <strong>Eye movement / attention:</strong> Cursor path is used as an attention proxy (where you moved the mouse reflects visual search). For direct eye tracking, use a compatible eye-tracking device; data can be integrated when available.
+          </div>
+          <div style="margin-top: 1rem;">
+            <button type="button" id="btn-play-again" class="btn btn-primary">Play again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Trace — Hand-eye coordination assessment. Metrics are for education and self-tracking only.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      if (!window.TraceAuth || !TraceAuth.isLoggedIn()) {
+        window.location.href = 'index.html';
+        return;
+      }
+      var navLogout = document.getElementById('nav-logout');
+      if (navLogout) navLogout.style.display = 'block';
+      navLogout.addEventListener('click', function (e) {
+        e.preventDefault();
+        TraceAuth.logout();
+        window.location.href = 'index.html';
+      });
+    })();
+  </script>
+  <script src="js/game.js"></script>
+</body>
+</html>

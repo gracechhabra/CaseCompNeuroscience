@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trace — Hand-Eye Coordination & Neuroscience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Trace</a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="game.html" id="nav-play">Play Game</a>
+        <a href="#" id="nav-logout" style="display: none;">Log out</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Login: show when not logged in -->
+    <div id="login-gate" class="gate-screen" style="display: none;">
+      <div class="gate-box">
+        <h2>Welcome to Trace</h2>
+        <p>Log in to play. Your data stays on this device.</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-name" class="required">Your name or participant ID</label>
+            <input type="text" id="login-name" required placeholder="e.g. Jane or P001">
+          </div>
+          <div class="form-group">
+            <label for="login-email">Email (optional)</label>
+            <input type="email" id="login-email" placeholder="you@example.com">
+          </div>
+          <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main content: show when logged in (no questionnaire gate) -->
+    <div id="main-content" style="display: none;">
+      <!-- Notification: weekly questionnaire due + questions that will come up -->
+      <div id="questionnaire-notification" class="questionnaire-notification" style="display: none;">
+        <div class="container">
+          <div class="notification-card">
+            <h3>Weekly questionnaire</h3>
+            <p>Please complete your weekly questionnaire when you can. Questions that will come up:</p>
+            <ul id="questions-preview-list"></ul>
+            <div class="notification-actions">
+              <button type="button" id="btn-open-questionnaire" class="btn btn-primary">Fill questionnaire</button>
+              <button type="button" id="btn-dismiss-notification" class="btn btn-secondary">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questionnaire modal (hidden until "Fill questionnaire" clicked) -->
+      <div id="questionnaire-modal" class="modal-overlay" style="display: none;" aria-hidden="true">
+        <div class="modal-content questionnaire-modal-box">
+          <h2>Weekly questionnaire</h2>
+          <p class="subtitle">Please complete this form once per week. All fields marked with * are required.</p>
+          <form id="questionnaire-form">
+            <div id="questionnaire-fields"></div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <button type="button" id="btn-close-questionnaire" class="modal-close" aria-label="Close">&times;</button>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <h1>Detect early Alzheimer’s <span class="accent">through hand–eye coordination</span></h1>
+          <p>Drag from number to number in order. We track reaction time, path accuracy, and cursor movement plus simple eye-tracking cues—to help spot early cognitive changes linked to Alzheimer’s.</p>
+          <a href="game.html" class="btn btn-primary">Play Trace →</a>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container">
+          <div class="section-title">
+            <h2>Why hand–eye coordination matters in detecting Alzheimer’s</h2>
+            <p>How subtle changes in coordination can signal early cognitive shifts</p>
+          </div>
+          <div class="cards">
+            <div class="card">
+              <h3>Visual–motor integration changes</h3>
+              <p>Alzheimer’s can affect how the brain connects visual information with motor responses. Tracking how users move from number to number helps identify early disruptions in this visual–motor link.</p>
+            </div>
+            <div class="card">
+              <h3>Slower reaction time</h3>
+              <p>Early cognitive decline often leads to slower processing speeds. Measuring reaction time and cursor movement offers insight into how quickly the brain interprets and responds to visual cues.</p>
+            </div>
+            <div class="card">
+              <h3>Attention and spatial awareness</h3>
+              <p>Finding numbers in sequence requires focus and spatial navigation—areas that may show subtle decline in the early stages of Alzheimer’s. Tracking these behaviors helps spot potential early changes.</p>
+            </div>
+          </div>
+        </div>
+      </section>      
+
+      <section>
+        <div class="container">
+          <div class="section-title">
+            <h2>How it works</h2>
+            <p>Drag between numbers; we draw your path and measure coordination</p>
+          </div>
+          <div class="cards">
+            <div class="card">
+              <h3>1. Drag in order</h3>
+              <p>Start on the dot labeled 1, then drag to 2, then to 3, and so on. A green path shows your drag. Release on the correct next number to complete each segment.</p>
+            </div>
+            <div class="card">
+              <h3>2. We measure</h3>
+              <p>We record reaction time per segment, wrong releases, total time, and cursor path (used as an attention/eye-movement proxy when no eye tracker is connected).</p>
+            </div>
+            <div class="card">
+              <h3>3. See your metrics</h3>
+              <p>After each round, view coordination and attention-path metrics. Connect an eye-tracking device in the future for full eye-movement data.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container" style="text-align: center;">
+          <h2 style="margin-bottom: 0.5rem;">Assess early cognitive patterns linked to Alzheimer’s</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Drag between the numbers. One round takes under a minute.</p>
+          <a href="game.html" class="btn btn-primary">Start game</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Trace — Hand-eye coordination assessment for education and research. Not a medical device.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      const loginGate = document.getElementById('login-gate');
+      const mainContent = document.getElementById('main-content');
+      const navLogout = document.getElementById('nav-logout');
+      const questionnaireNotification = document.getElementById('questionnaire-notification');
+      const questionsPreviewList = document.getElementById('questions-preview-list');
+      const questionnaireModal = document.getElementById('questionnaire-modal');
+      const questionnaireForm = document.getElementById('questionnaire-form');
+
+      function renderQuestionsPreview() {
+        if (!window.TraceAuth || !questionsPreviewList) return;
+        TraceAuth.QUESTIONNAIRE_FIELDS.forEach(function (f) {
+          const li = document.createElement('li');
+          li.textContent = f.label + (f.required ? ' *' : '');
+          questionsPreviewList.appendChild(li);
+        });
+      }
+
+      function renderQuestionnaireFields() {
+        const container = document.getElementById('questionnaire-fields');
+        if (!container || !window.TraceAuth) return;
+        const fields = TraceAuth.QUESTIONNAIRE_FIELDS;
+        container.innerHTML = fields.map(function (f) {
+          var input = '';
+          if (f.type === 'select') {
+            input = '<select name="' + f.id + '" id="q-' + f.id + '" ' + (f.required ? 'required' : '') + '><option value="">Select...</option>' +
+              f.options.map(function (o) { return '<option value="' + o + '">' + o + '</option>'; }).join('') + '</select>';
+          } else if (f.type === 'number') {
+            input = '<input type="number" name="' + f.id + '" id="q-' + f.id + '" min="' + (f.min || 0) + '" max="' + (f.max || 999) + '" ' + (f.required ? 'required' : '') + '>';
+          } else if (f.type === 'textarea') {
+            input = '<textarea name="' + f.id + '" id="q-' + f.id + '"></textarea>';
+          } else {
+            input = '<input type="text" name="' + f.id + '" id="q-' + f.id + '" ' + (f.required ? 'required' : '') + '>';
+          }
+          return '<div class="form-group"><label for="q-' + f.id + '" ' + (f.required ? 'class="required"' : '') + '>' + f.label + '</label>' + input + '</div>';
+        }).join('');
+      }
+
+      function showScreen() {
+        loginGate.style.display = 'none';
+        mainContent.style.display = 'none';
+
+        if (!TraceAuth.isLoggedIn()) {
+          loginGate.style.display = 'flex';
+          navLogout.style.display = 'none';
+          return;
+        }
+        navLogout.style.display = 'block';
+        mainContent.style.display = 'block';
+
+        if (TraceAuth.needsQuestionnaire()) {
+          questionnaireNotification.style.display = 'block';
+        } else {
+          questionnaireNotification.style.display = 'none';
+        }
+      }
+
+      document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = document.getElementById('login-name').value.trim();
+        var email = document.getElementById('login-email').value.trim();
+        if (!name) return;
+        TraceAuth.setUser({ id: 'user-' + Date.now(), name: name, email: email || null });
+        showScreen();
+      });
+
+      document.getElementById('btn-open-questionnaire').addEventListener('click', function () {
+        renderQuestionnaireFields();
+        questionnaireModal.style.display = 'flex';
+        questionnaireModal.setAttribute('aria-hidden', 'false');
+      });
+
+      document.getElementById('btn-dismiss-notification').addEventListener('click', function () {
+        questionnaireNotification.style.display = 'none';
+      });
+
+      document.getElementById('btn-close-questionnaire').addEventListener('click', function () {
+        questionnaireModal.style.display = 'none';
+        questionnaireModal.setAttribute('aria-hidden', 'true');
+      });
+
+      questionnaireModal.addEventListener('click', function (e) {
+        if (e.target === questionnaireModal) {
+          questionnaireModal.style.display = 'none';
+          questionnaireModal.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      questionnaireForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var form = e.target;
+        var answers = {};
+        TraceAuth.QUESTIONNAIRE_FIELDS.forEach(function (f) {
+          var el = form.querySelector('[name="' + f.id + '"]');
+          if (el) answers[f.id] = el.value;
+        });
+        TraceAuth.setQuestionnaireDone(answers);
+        questionnaireModal.style.display = 'none';
+        questionnaireModal.setAttribute('aria-hidden', 'true');
+        questionnaireNotification.style.display = 'none';
+      });
+
+      navLogout.addEventListener('click', function (e) {
+        e.preventDefault();
+        TraceAuth.logout();
+        showScreen();
+      });
+
+      renderQuestionsPreview();
+      showScreen();
+    })();
+  </script>
+</body>
+</html>
